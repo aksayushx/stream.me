@@ -19,7 +19,6 @@ if (process.env.NODE_ENV === 'production') {
 app.set('port', (process.env.PORT || 4001))
 
 connections = {}
-timeOnline = {}
 
 io.on('connection', (socket) => {
 
