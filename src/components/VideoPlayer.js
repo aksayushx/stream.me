@@ -13,8 +13,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "../styles/VideoPlayer.css";
 
 const server_url =
-  process.env.NODE_ENV === "prodcution"
-    ? "https://gentle-basin-90256.herokuapp.com/"
+  process.env.NODE_ENV === "production"
+    ? "https://gentle-basin-90256.herokuapp.com"
     : "http://localhost:4001";
 
 var connections = {};
