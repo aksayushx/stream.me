@@ -1,6 +1,7 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
+import "../styles/Home.css";
 
 function Home() {
   const [roomUrl, setRoomUrl] = React.useState("");
@@ -21,9 +22,10 @@ function Home() {
 
   return (
     <div className="App">
-      <div className="row">
+      <div>
         <div>
           <Button
+            className="create-room"
             onClick={() => {
               createRoom();
             }}
@@ -31,30 +33,21 @@ function Home() {
             Create a Meeting
           </Button>
         </div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            joinRoom();
-          }}
-        >
-          <div className="row">
-            <input
-              value={roomUrl}
+        <div className="join-room">
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder="Enter Meeting Link Here"
+              aria-label="Meeting-Link"
               onChange={(e) => setRoomUrl(e.target.value)}
-              type="text"
-              className="field container input-field"
-              placeholder="Enter Meeting Link Here!"
-            ></input>
-          </div>
-          <Button
-            variant="light"
-            className="submit-button"
-            type="submit"
-            value="Submit"
-          >
-            Join Room
-          </Button>
-        </form>
+              aria-describedby="basic-addon2"
+            />
+            <InputGroup.Append>
+              <Button variant="outline-secondary" onClick={joinRoom}>
+                Join Roon
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
+        </div>
       </div>
     </div>
   );

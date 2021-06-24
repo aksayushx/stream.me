@@ -1,15 +1,15 @@
 import React, { useState, useEffect, createRef } from "react";
 import io from "socket.io-client";
-
-import { IconButton, Badge, Input, Button } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
+import { Button, InputGroup, FormControl } from "react-bootstrap";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import VideocamOffIcon from "@material-ui/icons/VideocamOff";
 import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
 import CallEndIcon from "@material-ui/icons/CallEnd";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Row } from "reactstrap";
-import "bootstrap/dist/css/bootstrap.css";
 import "../styles/VideoPlayer.css";
 
 const server_url =
@@ -28,8 +28,6 @@ var elms = 0;
 function VideoPlayer() {
   const localVideoRef = createRef();
   const [videoAvailable, setVideoAvailable] = useState(false);
-  const [askForUsername, setAskForUsername] = useState(true);
-  const [userName, setUsername] = useState("Ayush");
   const [audioAvailable, setAudioAvailable] = useState(false);
   const [videoOn, setVideoOn] = useState(false);
   const [audioOn, setAudioOn] = useState(false);
@@ -198,7 +196,7 @@ function VideoPlayer() {
     let height = String(100 / elms) + "%";
     let width = "";
     if (elms === 0 || elms === 1) {
-      width = "100%";
+      width = "60%";
       height = "100%";
     } else if (elms === 2) {
       width = "45%";
@@ -276,8 +274,9 @@ function VideoPlayer() {
                 minHeight: cssMesure.minHeight,
                 maxHeight: "100%",
                 margin: "10px",
+                borderRadius: "2rem",
                 borderStyle: "solid",
-                borderColor: "#bdbdbd",
+                borderColor: "black",
                 objectFit: "fill",
               };
               for (let i in css) video.style[i] = css[i];
@@ -364,14 +363,21 @@ function VideoPlayer() {
     window.location.href = "/";
   };
 
-  const connect = () => {
-    setAskForUsername(false);
-    getMedia();
+  const copyInviteLink = () => {
+    let text = window.location.href;
+    navigator.clipboard.writeText(text).then(
+      () => {
+        alert("Link copied to clipboard!");
+      },
+      () => {
+        alert("Failed to copy");
+      }
+    );
   };
 
   useEffect(() => {
     getPermissions();
-    connect();
+    getMedia();
   }, []);
 
   useEffect(() => {
@@ -380,125 +386,46 @@ function VideoPlayer() {
 
   return (
     <div>
-      {askForUsername === true ? (
-        <div>
-          <div
-            style={{
-              background: "white",
-              width: "30%",
-              height: "auto",
-              padding: "20px",
-              minWidth: "400px",
-              textAlign: "center",
-              margin: "auto",
-              marginTop: "50px",
-              justifyContent: "center",
-            }}
-          >
-            <p style={{ margin: 0, fontWeight: "bold", paddingRight: "50px" }}>
-              Set your username
-            </p>
-            <Input
-              placeholder="Username"
-              value={userName}
-              onChange={(e) => setUsername(e.target.value)}
+      <div className="container">
+        <div className="invite-link">
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder={window.location.href}
+              aria-label={window.location.href}
+              aria-describedby="basic-addon2"
+              disabled
             />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={connect}
-              style={{ margin: "20px" }}
-            >
-              Connect
-            </Button>
-          </div>
-
-          <div
-            style={{
-              justifyContent: "center",
-              textAlign: "center",
-              paddingTop: "40px",
-            }}
-          >
-            <video
-              id="my-video"
-              ref={localVideoRef}
-              autoPlay
-              muted
-              style={{
-                borderStyle: "solid",
-                borderColor: "#bdbdbd",
-                objectFit: "fill",
-                width: "60%",
-                height: "30%",
-              }}
-            ></video>
-          </div>
-        </div>
-      ) : (
-        <div>
-          <div
-            className="btn-down"
-            style={{
-              backgroundColor: "whitesmoke",
-              color: "whitesmoke",
-              textAlign: "center",
-            }}
-          >
-            <IconButton style={{ color: "#424242" }} onClick={handleVideo}>
-              {videoOn === true ? <VideocamIcon /> : <VideocamOffIcon />}
-            </IconButton>
-
-            <IconButton style={{ color: "#f44336" }} onClick={handleEndCall}>
-              <CallEndIcon />
-            </IconButton>
-
-            <IconButton style={{ color: "#424242" }} onClick={handleAudio}>
-              {audioOn === true ? <MicIcon /> : <MicOffIcon />}
-            </IconButton>
-          </div>
-
-          <div className="container">
-            <div style={{ paddingTop: "20px" }}>
-              <Input value={window.location.href} disable="true"></Input>
-              <Button
-                style={{
-                  backgroundColor: "#3f51b5",
-                  color: "whitesmoke",
-                  marginLeft: "20px",
-                  marginTop: "10px",
-                  width: "120px",
-                  fontSize: "10px",
-                }}
-                onClick={() => {}}
-              >
-                Copy invite link
+            <InputGroup.Append>
+              <Button variant="outline-secondary" onClick={copyInviteLink}>
+                Copy Invite Link
               </Button>
-            </div>
-
-            <Row
-              id="main"
-              className="flex-container"
-              style={{ margin: 0, padding: 0 }}
-            >
-              <video
-                id="my-video"
-                ref={localVideoRef}
-                autoPlay
-                muted
-                style={{
-                  borderStyle: "solid",
-                  borderColor: "#bdbdbd",
-                  margin: "10px",
-                  objectFit: "fill",
-                  width: "100%",
-                  height: "100%",
-                }}
-              ></video>
-            </Row>
-          </div>
+            </InputGroup.Append>
+          </InputGroup>
         </div>
-      )}
+
+        <Row id="main" className="flex-container">
+          <video
+            id="my-video"
+            ref={localVideoRef}
+            autoPlay
+            muted
+            className="video-stream"
+          ></video>
+        </Row>
+        <div className="btn-down options">
+          <IconButton className="video-button" onClick={handleVideo}>
+            {videoOn === true ? <VideocamIcon /> : <VideocamOffIcon />}
+          </IconButton>
+
+          <IconButton className="end-call" onClick={handleEndCall}>
+            <CallEndIcon />
+          </IconButton>
+
+          <IconButton className="audio-button" onClick={handleAudio}>
+            {audioOn === true ? <MicIcon /> : <MicOffIcon />}
+          </IconButton>
+        </div>
+      </div>
     </div>
   );
 }
