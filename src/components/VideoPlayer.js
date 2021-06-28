@@ -1,6 +1,5 @@
 import React, { useState, useEffect, createRef } from "react";
 import io from "socket.io-client";
-import { IconButton } from "@material-ui/core";
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import VideocamOffIcon from "@material-ui/icons/VideocamOff";
@@ -244,8 +243,7 @@ function VideoPlayer() {
           connections[socketListId] = new RTCPeerConnection(
             peerConnectionConfig
           );
-          // Wait for their ice candidate
-          connections[socketListId].onicecandidate = function (event) {
+          connections[socketListId].onicecandidate = (event) => {
             if (event.candidate != null) {
               socket.emit(
                 "signal",
@@ -260,7 +258,6 @@ function VideoPlayer() {
               `[data-socket="${socketListId}"]`
             );
             if (searchVidep !== null) {
-              // if i don't do this check it make an empyt square
               searchVidep.srcObject = event.stream;
             } else {
               elms = clients.length;
@@ -276,7 +273,8 @@ function VideoPlayer() {
                 margin: "10px",
                 borderRadius: "2rem",
                 borderStyle: "solid",
-                borderColor: "black",
+                borderWidth: "4px",
+                borderColor: "yellowgreen",
                 objectFit: "fill",
               };
               for (let i in css) video.style[i] = css[i];
@@ -396,7 +394,11 @@ function VideoPlayer() {
               disabled
             />
             <InputGroup.Append>
-              <Button variant="outline-secondary" onClick={copyInviteLink}>
+              <Button
+                variant="outline-secondary"
+                className="copy-button"
+                onClick={copyInviteLink}
+              >
                 Copy Invite Link
               </Button>
             </InputGroup.Append>
@@ -413,17 +415,25 @@ function VideoPlayer() {
           ></video>
         </Row>
         <div className="btn-down options">
-          <IconButton className="video-button" onClick={handleVideo}>
-            {videoOn === true ? <VideocamIcon /> : <VideocamOffIcon />}
-          </IconButton>
+          <Button className="video-button" variant="dark" onClick={handleVideo}>
+            {videoOn === true ? (
+              <VideocamIcon className="icon" />
+            ) : (
+              <VideocamOffIcon className="icon" />
+            )}
+          </Button>
 
-          <IconButton className="end-call" onClick={handleEndCall}>
+          <Button className="end-call" variant="dark" onClick={handleEndCall}>
             <CallEndIcon />
-          </IconButton>
+          </Button>
 
-          <IconButton className="audio-button" onClick={handleAudio}>
-            {audioOn === true ? <MicIcon /> : <MicOffIcon />}
-          </IconButton>
+          <Button className="audio-button" variant="dark" onClick={handleAudio}>
+            {audioOn === true ? (
+              <MicIcon className="icon" />
+            ) : (
+              <MicOffIcon className="icon" />
+            )}
+          </Button>
         </div>
       </div>
     </div>

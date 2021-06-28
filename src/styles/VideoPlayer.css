@@ -1,6 +1,12 @@
+body {
+  margin: 0;
+  text-align: center;
+  background-color: whitesmoke;
+}
+
 .flex-container {
   height: calc(100% - 150px);
-  width: 100%;
+  width: 100vw;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -21,18 +27,28 @@
   z-index: 2;
   position: fixed;
   bottom: 0px;
-  width: 100%;
+  width: 100vw;
   height: auto;
 }
 
 .options {
-  background-color: whitesmoke;
-  color: blue;
+  background-color: rgb(202, 230, 220);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   text-align: center;
 }
 
 .end-call {
   color: red;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-radius: 2rem;
+}
+
+.end-call:hover {
+  background-color: red;
 }
 
 .invite-link {
@@ -46,10 +62,29 @@
 
 .video-stream {
   border-style: solid;
-  border-color: black;
+  border-width: 4px;
+  border-color: yellowgreen;
   border-radius: 2rem;
   margin: 10px;
   object-fit: fill;
   width: 60%;
   height: 100%;
+}
+
+.audio-button {
+  border-radius: 2rem;
+  background-color: black;
+}
+.video-button {
+  border-radius: 2rem;
+  background-color: black;
+}
+
+.copy-button {
+  background-color: black;
+  color: yellowgreen;
+  font-weight: bold;
+}
+.icon {
+  color: yellowgreen;
 }

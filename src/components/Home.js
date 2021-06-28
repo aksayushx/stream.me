@@ -1,5 +1,11 @@
 import React from "react";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
+import {
+  Button,
+  InputGroup,
+  FormControl,
+  ListGroup,
+  ListGroupItem,
+} from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import "../styles/Home.css";
 
@@ -23,6 +29,21 @@ function Home() {
   return (
     <div className="App">
       <div>
+        <h1 className="name">Flimsy</h1>
+        <h1 className="subhead">Connect Instantly!</h1>
+        <div className="features">
+          <ListGroup>
+            <ListGroup.Item variant="primary">
+              Easy to Use Interface
+            </ListGroup.Item>
+            <ListGroup.Item variant="secondary">
+              Connect with upto 10 people seamlessly
+            </ListGroup.Item>
+            <ListGroup.Item variant="success">
+              High quality video and audio
+            </ListGroup.Item>
+          </ListGroup>
+        </div>
         <div>
           <Button
             className="create-room"
@@ -40,10 +61,15 @@ function Home() {
               aria-label="Meeting-Link"
               onChange={(e) => setRoomUrl(e.target.value)}
               aria-describedby="basic-addon2"
+              className="meeting-link"
             />
             <InputGroup.Append>
-              <Button variant="outline-secondary" onClick={joinRoom}>
-                Join Roon
+              <Button
+                variant="outline-secondary"
+                className="meeting-link join-button"
+                onClick={joinRoom}
+              >
+                Join Room
               </Button>
             </InputGroup.Append>
           </InputGroup>

@@ -1,11 +1,13 @@
-html,
-body {
-  height: 100%;
-}
 body {
   margin: 0;
   text-align: center;
-  background-color: whitesmoke;
+}
+
+.App {
+  background-image: url("https://images.unsplash.com/photo-1588873281272-14886ba1f737?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1850&q=80");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
 }
 
 .container2 {
@@ -17,7 +19,12 @@ body {
 }
 
 .create-room {
-  color: orange;
+  background-color: black;
+  color: yellowgreen;
+  border-right: 4px;
+  border-color: yellowgreen;
+  font-size: 20px;
+  margin-top: 25px;
 }
 
 .join-room {
@@ -26,5 +33,35 @@ body {
   align-items: center;
   margin-left: auto;
   margin-right: auto;
+  font-size: 20px;
   margin-top: 25px;
+}
+
+.features {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
+  padding-top: 2%;
+}
+.join-button {
+  background-color: black;
+  color: yellowgreen;
+}
+.meeting-link {
+  font-size: 20px;
+}
+
+.name {
+  font-size: 60px;
+  color: white;
+  font-weight: 1000;
+  padding-top: 7%;
+}
+
+.subhead {
+  font-size: 30px;
+  color: white;
+  font-weight: 500;
 }
