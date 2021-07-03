@@ -18,7 +18,16 @@ const server_url =
 
 var connections = {};
 const peerConnectionConfig = {
-  iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+  iceServers: [
+    {
+      urls: [
+        "stun:stun.l.google.com:19302",
+        "stun:stun1.l.google.com:19302",
+        "stun:stun2.l.google.com:19302",
+        "stun:stun3.l.google.com:19302",
+      ],
+    },
+  ],
 };
 var socket = null;
 var socketId = null;
@@ -45,7 +54,10 @@ function VideoPlayer() {
 
       if (videoAvailable || audioAvailable) {
         navigator.mediaDevices
-          .getUserMedia({ video: videoAvailable, audio: audioAvailable })
+          .getUserMedia({
+            video: videoAvailable,
+            audio: audioAvailable,
+          })
           .then((stream) => {
             window.localStream = stream;
             localVideoRef.current.srcObject = stream;
@@ -75,7 +87,9 @@ function VideoPlayer() {
       try {
         let tracks = localVideoRef.current.srcObject.getTracks();
         tracks.forEach((track) => track.stop());
-      } catch (e) {}
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 
@@ -83,7 +97,7 @@ function VideoPlayer() {
     try {
       window.localStream.getTracks().forEach((track) => track.stop());
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
 
     window.localStream = stream;
@@ -104,43 +118,15 @@ function VideoPlayer() {
               JSON.stringify({ sdp: connections[id].localDescription })
             );
           })
-          .catch((e) => console.log(e));
+          .catch((e) => console.error(e));
       });
     }
 
     stream.getTracks().forEach(
-      (track) =>
+      async (track) =>
         (track.onended = () => {
           setAudioOn(false);
           setVideoOn(false);
-          try {
-            let tracks = localVideoRef.current.srcObject.getTracks();
-            tracks.forEach((track) => track.stop());
-          } catch (e) {
-            console.log(e);
-          }
-
-          let blackSilence = (...args) =>
-            new MediaStream([black(...args), silence()]);
-          window.localStream = blackSilence();
-          localVideoRef.current.srcObject = window.localStream;
-
-          for (let id in connections) {
-            connections[id].addStream(window.localStream);
-
-            connections[id].createOffer().then((description) => {
-              connections[id]
-                .setLocalDescription(description)
-                .then(() => {
-                  socket.emit(
-                    "signal",
-                    id,
-                    JSON.stringify({ sdp: connections[id].localDescription })
-                  );
-                })
-                .catch((e) => console.log(e));
-            });
-          }
         })
     );
   };
@@ -202,7 +188,7 @@ function VideoPlayer() {
       height = "100%";
     } else if (elms === 3 || elms === 4) {
       width = "35%";
-      height = "50%";
+      height = "48%";
     } else {
       width = String(100 / elms) + "%";
     }
@@ -381,6 +367,36 @@ function VideoPlayer() {
   useEffect(() => {
     getUserMedia();
   }, [videoOn, audioOn]);
+  useEffect(() => {
+    try {
+      let tracks = localVideoRef.current.srcObject.getTracks();
+      tracks.forEach((track) => track.stop());
+    } catch (e) {
+      console.log(e);
+    }
+
+    let blackSilence = (...args) =>
+      new MediaStream([black(...args), silence()]);
+    window.localStream = blackSilence();
+    localVideoRef.current.srcObject = window.localStream;
+
+    for (let id in connections) {
+      connections[id].addStream(window.localStream);
+
+      connections[id].createOffer().then((description) => {
+        connections[id]
+          .setLocalDescription(description)
+          .then(() => {
+            socket.emit(
+              "signal",
+              id,
+              JSON.stringify({ sdp: connections[id].localDescription })
+            );
+          })
+          .catch((e) => console.log(e));
+      });
+    }
+  }, [getUserMediaSuccess]);
 
   return (
     <div>

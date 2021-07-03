@@ -29,15 +29,15 @@ function Home() {
   return (
     <div className="App">
       <div>
-        <h1 className="name">Flimsy</h1>
-        <h1 className="subhead">Connect Instantly!</h1>
+        <h1 className="name">stream.me</h1>
+        <h1 className="subhead">Be in Touch!!!</h1>
         <div className="features">
           <ListGroup>
             <ListGroup.Item variant="primary">
               Easy to Use Interface
             </ListGroup.Item>
             <ListGroup.Item variant="secondary">
-              Connect with upto 10 people seamlessly
+              Connect with upto 5 people seamlessly
             </ListGroup.Item>
             <ListGroup.Item variant="success">
               High quality video and audio
@@ -47,6 +47,7 @@ function Home() {
         <div>
           <Button
             className="create-room"
+            variant="dark"
             onClick={() => {
               createRoom();
             }}
@@ -67,6 +68,7 @@ function Home() {
               <Button
                 variant="outline-secondary"
                 className="meeting-link join-button"
+                variant="dark"
                 onClick={joinRoom}
               >
                 Join Room
