@@ -65,3 +65,61 @@ body {
   color: white;
   font-weight: 500;
 }
+
+.input-feild {
+  background-color: #ffffff;
+  border-radius: 30px;
+  width: 90%;
+  margin-bottom: 10px;
+}
+
+.pad-60 {
+  padding-left: 30px;
+}
+.input-user {
+  margin-left: auto;
+  margin-right: auto;
+}
+.popup .modal-content {
+  background-color: #fde3d9;
+}
+
+.label {
+  width: 30%;
+  text-align: left;
+  font-size: 12px;
+  padding-left: 35px;
+  padding-top: 16px;
+  color: #000000;
+}
+
+.header {
+  margin-bottom: 20px;
+  font-weight: 900;
+}
+.my-modal {
+  height: 40%;
+  width: 60%;
+}
+.submit-button {
+  color: white;
+  background-color: black;
+  width: 100px;
+  height: 50px;
+  border-width: 0;
+  border-radius: 25px;
+}
+
+.feild {
+  height: 20px;
+  border: none;
+  border-color: transparent;
+}
+
+input[type="text"] {
+  border: none;
+}
+
+.username {
+  font-size: medium;
+}

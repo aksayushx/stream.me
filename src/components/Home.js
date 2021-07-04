@@ -4,79 +4,125 @@ import {
   InputGroup,
   FormControl,
   ListGroup,
-  ListGroupItem,
+  Modal,
+  ModalBody,
 } from "react-bootstrap";
+import { useHistory } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 import "../styles/Home.css";
 
 function Home() {
+  const [modalShow, setModalShow] = React.useState(false);
+  const [createRoom, setCreateRoom] = React.useState(true);
+  const [userName, setUserName] = React.useState("");
   const [roomUrl, setRoomUrl] = React.useState("");
 
   const joinRoom = () => {
-    if (roomUrl === "") {
-      alert("Enter Valid Room URl");
+    if (createRoom === true) {
+      var url = uuidv4();
+      window.location.href = `/${url}`;
     } else {
-      var url = roomUrl.split("/");
-      window.location.href = `/${url[url.length - 1]}`;
+      if (roomUrl === "") {
+        alert("Enter Valid Room URl");
+      } else {
+        var url = roomUrl.split("/");
+        window.location.href = `/${url[url.length - 1]}`;
+      }
     }
-  };
-
-  const createRoom = () => {
-    var url = uuidv4();
-    window.location.href = `/${url}`;
   };
 
   return (
     <div className="App">
+      <h1 className="name">stream.me</h1>
+      <h1 className="subhead">Be in Touch!!!</h1>
+      <div className="features">
+        <ListGroup>
+          <ListGroup.Item variant="primary">
+            Easy to Use Interface
+          </ListGroup.Item>
+          <ListGroup.Item variant="secondary">
+            Connect with upto 5 people seamlessly
+          </ListGroup.Item>
+          <ListGroup.Item variant="success">
+            High quality video and audio
+          </ListGroup.Item>
+        </ListGroup>
+      </div>
       <div>
-        <h1 className="name">stream.me</h1>
-        <h1 className="subhead">Be in Touch!!!</h1>
-        <div className="features">
-          <ListGroup>
-            <ListGroup.Item variant="primary">
-              Easy to Use Interface
-            </ListGroup.Item>
-            <ListGroup.Item variant="secondary">
-              Connect with upto 5 people seamlessly
-            </ListGroup.Item>
-            <ListGroup.Item variant="success">
-              High quality video and audio
-            </ListGroup.Item>
-          </ListGroup>
-        </div>
-        <div>
-          <Button
-            className="create-room"
-            variant="dark"
-            onClick={() => {
-              createRoom();
+        <Button
+          className="create-room"
+          variant="dark"
+          onClick={() => {
+            setModalShow(true);
+          }}
+        >
+          Create a Meeting
+        </Button>
+      </div>
+      <div className="join-room">
+        <InputGroup className="mb-3">
+          <FormControl
+            placeholder="Enter Meeting Link Here"
+            aria-label="Meeting-Link"
+            onChange={(e) => {
+              setRoomUrl(e.target.value);
+              setCreateRoom(false);
+            }}
+            aria-describedby="basic-addon2"
+            className="meeting-link"
+          />
+          <InputGroup.Append>
+            <Button
+              variant="outline-secondary"
+              className="meeting-link join-button"
+              variant="dark"
+              onClick={() => setModalShow(true)}
+            >
+              Join Room
+            </Button>
+          </InputGroup.Append>
+        </InputGroup>
+      </div>
+      <Modal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        className="popup"
+        dialogClassName="modal-90w"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton></Modal.Header>
+        <ModalBody>
+          <h2 className="pad-60 header">stream.me</h2>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              joinRoom();
             }}
           >
-            Create a Meeting
-          </Button>
-        </div>
-        <div className="join-room">
-          <InputGroup className="mb-3">
-            <FormControl
-              placeholder="Enter Meeting Link Here"
-              aria-label="Meeting-Link"
-              onChange={(e) => setRoomUrl(e.target.value)}
-              aria-describedby="basic-addon2"
-              className="meeting-link"
-            />
-            <InputGroup.Append>
-              <Button
-                variant="outline-secondary"
-                className="meeting-link join-button"
-                variant="dark"
-                onClick={joinRoom}
-              >
-                Join Room
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </div>
-      </div>
+            <div className="input-feild align-self-center input-user">
+              <div className="row">
+                <p className="label username">UserName</p>
+                <input
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  type="text"
+                  className="field"
+                  placeholder="Enter your name here"
+                ></input>
+              </div>
+            </div>
+            <Button
+              variant="light"
+              className="submit-button"
+              type="submit"
+              value="Submit"
+            >
+              Connect
+            </Button>
+          </form>
+        </ModalBody>
+      </Modal>
     </div>
   );
 }

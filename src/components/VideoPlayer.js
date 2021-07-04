@@ -429,6 +429,7 @@ function VideoPlayer() {
             muted
             className="video-stream"
           ></video>
+          <canvas hidden id="canvas"></canvas>
         </Row>
         <div className="btn-down options">
           <Button className="video-button" variant="dark" onClick={handleVideo}>
