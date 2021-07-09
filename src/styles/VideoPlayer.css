@@ -88,3 +88,18 @@ body {
 .icon {
   color: yellowgreen;
 }
+
+.chat-modal {
+  overflow: "auto";
+  overflow-y: "auto";
+  height: "400px";
+  text-align: "left";
+}
+.chat-button {
+  margin-left: 1rem;
+  border-radius: 2rem;
+  background-color: black;
+}
+.msgs {
+  word-break: "break-all";
+}

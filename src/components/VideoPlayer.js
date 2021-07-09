@@ -1,13 +1,16 @@
 import React, { useState, useEffect, createRef } from "react";
 import io from "socket.io-client";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
+import { Button, InputGroup, FormControl, Modal } from "react-bootstrap";
+import { Badge } from "@material-ui/core";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import VideocamOffIcon from "@material-ui/icons/VideocamOff";
 import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
 import CallEndIcon from "@material-ui/icons/CallEnd";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import ChatIcon from "@material-ui/icons/Chat";
+import { message } from "antd";
+import "antd/dist/antd.css";
 import { Row } from "reactstrap";
 import "../styles/VideoPlayer.css";
 
@@ -33,12 +36,16 @@ var socket = null;
 var socketId = null;
 var elms = 0;
 
-function VideoPlayer() {
+function VideoPlayer(props) {
   const localVideoRef = createRef();
   const [videoAvailable, setVideoAvailable] = useState(false);
   const [audioAvailable, setAudioAvailable] = useState(false);
   const [videoOn, setVideoOn] = useState(false);
   const [audioOn, setAudioOn] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [allMessages, setAllMessages] = useState([]);
+  const [message, setMessage] = useState("");
+  const [newMessages, setNewMessages] = useState(0);
 
   const getPermissions = async () => {
     try {
@@ -102,6 +109,7 @@ function VideoPlayer() {
 
     window.localStream = stream;
     localVideoRef.current.srcObject = stream;
+    //localVideoRef.current.play();
 
     for (let id in connections) {
       if (id === socketId) continue;
@@ -212,6 +220,8 @@ function VideoPlayer() {
     socket.on("connect", () => {
       socket.emit("join-call", window.location.href);
       socketId = socket.id;
+
+      socket.on("chat-message", addMessage);
 
       socket.on("user-left", (id) => {
         let video = document.querySelector(`[data-socket="${id}"]`);
@@ -338,6 +348,27 @@ function VideoPlayer() {
   const handleAudio = () => {
     setAudioOn(!audioOn);
   };
+  const openChat = () => {
+    setShowModal(true);
+    setNewMessages(0);
+  };
+
+  const addMessage = (data, sender, socketIdSender) => {
+    setAllMessages((allMessages) =>
+      allMessages.concat({ sender: sender, data: data })
+    );
+    console.log("Messgaes ", allMessages.length);
+    if (socketIdSender !== socketId) {
+      setNewMessages(newMessages + 1);
+    }
+  };
+
+  const sendMessage = () => {
+    if (message.length > 0) {
+      socket.emit("chat-message", message, "Ayush");
+      setMessage("");
+    }
+  };
 
   const handleEndCall = () => {
     try {
@@ -396,7 +427,7 @@ function VideoPlayer() {
           .catch((e) => console.log(e));
       });
     }
-  }, [getUserMediaSuccess]);
+  }, []);
 
   return (
     <div>
@@ -429,7 +460,6 @@ function VideoPlayer() {
             muted
             className="video-stream"
           ></video>
-          <canvas hidden id="canvas"></canvas>
         </Row>
         <div className="btn-down options">
           <Button className="video-button" variant="dark" onClick={handleVideo}>
@@ -451,7 +481,55 @@ function VideoPlayer() {
               <MicOffIcon className="icon" />
             )}
           </Button>
+          <Badge
+            badgeContent={newMessages}
+            max={999}
+            color="secondary"
+            onClick={openChat}
+          >
+            <Button className="chat-button" variant="dark" onClick={openChat}>
+              <ChatIcon />
+            </Button>
+          </Badge>
         </div>
+        <Modal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          style={{ zIndex: "999999" }}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Chat Room</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="chat-modal">
+            {allMessages.length > 0 ? (
+              allMessages.map((item, index) => (
+                <div key={index} style={{ textAlign: "left" }}>
+                  <p className="msgs">
+                    <b>{item.sender}</b>: {item.data}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>No message yet</p>
+            )}
+          </Modal.Body>
+          <Modal.Footer className="div-send-msg">
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="Message"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <InputGroup.Append>
+                <Button variant="outline-secondary" onClick={sendMessage}>
+                  Send
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

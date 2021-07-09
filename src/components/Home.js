@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   InputGroup,
@@ -7,15 +7,14 @@ import {
   Modal,
   ModalBody,
 } from "react-bootstrap";
-import { useHistory } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 import "../styles/Home.css";
 
 function Home() {
-  const [modalShow, setModalShow] = React.useState(false);
-  const [createRoom, setCreateRoom] = React.useState(true);
-  const [userName, setUserName] = React.useState("");
-  const [roomUrl, setRoomUrl] = React.useState("");
+  const [modalShow, setModalShow] = useState(false);
+  const [createRoom, setCreateRoom] = useState(true);
+  const [userName, setUserName] = useState("");
+  const [roomUrl, setRoomUrl] = useState("");
 
   const joinRoom = () => {
     if (createRoom === true) {
