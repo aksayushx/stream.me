@@ -1,6 +1,12 @@
 import React, { useState, useEffect, createRef } from "react";
 import io from "socket.io-client";
-import { Button, InputGroup, FormControl, Modal } from "react-bootstrap";
+import {
+  Button,
+  InputGroup,
+  FormControl,
+  Modal,
+  ModalBody,
+} from "react-bootstrap";
 import { Badge } from "@material-ui/core";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import VideocamOffIcon from "@material-ui/icons/VideocamOff";
@@ -9,14 +15,12 @@ import MicOffIcon from "@material-ui/icons/MicOff";
 import CallEndIcon from "@material-ui/icons/CallEnd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ChatIcon from "@material-ui/icons/Chat";
-import { message } from "antd";
-import "antd/dist/antd.css";
 import { Row } from "reactstrap";
 import "../styles/VideoPlayer.css";
 
 const server_url =
   process.env.NODE_ENV === "production"
-    ? "https://gentle-basin-90256.herokuapp.com"
+    ? "https://streamdotme.herokuapp.com"
     : "http://localhost:4001";
 
 var connections = {};
@@ -38,6 +42,8 @@ var elms = 0;
 
 function VideoPlayer(props) {
   const localVideoRef = createRef();
+  const [showUsernameModal, setShowUsernameModal] = useState(true);
+  const [username, setUsername] = useState("");
   const [videoAvailable, setVideoAvailable] = useState(false);
   const [audioAvailable, setAudioAvailable] = useState(false);
   const [videoOn, setVideoOn] = useState(false);
@@ -365,7 +371,7 @@ function VideoPlayer(props) {
 
   const sendMessage = () => {
     if (message.length > 0) {
-      socket.emit("chat-message", message, "Ayush");
+      socket.emit("chat-message", message, username);
       setMessage("");
     }
   };
@@ -390,10 +396,15 @@ function VideoPlayer(props) {
     );
   };
 
-  useEffect(() => {
-    getPermissions();
-    getMedia();
-  }, []);
+  const connect = () => {
+    if (username.length === 0) {
+      alert("Enter a valid name");
+    } else {
+      setShowUsernameModal(false);
+      getPermissions();
+      getMedia();
+    }
+  };
 
   useEffect(() => {
     getUserMedia();
@@ -470,10 +481,6 @@ function VideoPlayer(props) {
             )}
           </Button>
 
-          <Button className="end-call" variant="dark" onClick={handleEndCall}>
-            <CallEndIcon />
-          </Button>
-
           <Button className="audio-button" variant="dark" onClick={handleAudio}>
             {audioOn === true ? (
               <MicIcon className="icon" />
@@ -483,7 +490,7 @@ function VideoPlayer(props) {
           </Button>
           <Badge
             badgeContent={newMessages}
-            max={999}
+            max={99}
             color="secondary"
             onClick={openChat}
           >
@@ -491,6 +498,9 @@ function VideoPlayer(props) {
               <ChatIcon />
             </Button>
           </Badge>
+          <Button className="end-call" variant="dark" onClick={handleEndCall}>
+            <CallEndIcon />
+          </Button>
         </div>
         <Modal
           show={showModal}
@@ -529,6 +539,46 @@ function VideoPlayer(props) {
               </InputGroup.Append>
             </InputGroup>
           </Modal.Footer>
+        </Modal>
+        <Modal
+          show={showUsernameModal}
+          onHide={() => setShowUsernameModal(false)}
+          className="popup"
+          dialogClassName="modal-90w"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton></Modal.Header>
+          <ModalBody>
+            <h2 className="pad-60 header">stream.me</h2>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                connect();
+              }}
+            >
+              <div className="input-feild align-self-center input-user">
+                <div className="row">
+                  <p className="label username">UserName</p>
+                  <input
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    type="text"
+                    className="field"
+                    placeholder="Enter your name here"
+                  ></input>
+                </div>
+              </div>
+              <Button
+                variant="light"
+                className="submit-button"
+                type="submit"
+                value="submit"
+              >
+                Connect
+              </Button>
+            </form>
+          </ModalBody>
         </Modal>
       </div>
     </div>

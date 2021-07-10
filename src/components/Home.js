@@ -1,19 +1,10 @@
 import React, { useState } from "react";
-import {
-  Button,
-  InputGroup,
-  FormControl,
-  ListGroup,
-  Modal,
-  ModalBody,
-} from "react-bootstrap";
+import { Button, InputGroup, FormControl, ListGroup } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import "../styles/Home.css";
 
 function Home() {
-  const [modalShow, setModalShow] = useState(false);
   const [createRoom, setCreateRoom] = useState(true);
-  const [userName, setUserName] = useState("");
   const [roomUrl, setRoomUrl] = useState("");
 
   const joinRoom = () => {
@@ -24,7 +15,7 @@ function Home() {
       if (roomUrl === "") {
         alert("Enter Valid Room URl");
       } else {
-        var url = roomUrl.split("/");
+        url = roomUrl.split("/");
         window.location.href = `/${url[url.length - 1]}`;
       }
     }
@@ -52,7 +43,8 @@ function Home() {
           className="create-room"
           variant="dark"
           onClick={() => {
-            setModalShow(true);
+            setCreateRoom(true);
+            joinRoom();
           }}
         >
           Create a Meeting
@@ -72,56 +64,15 @@ function Home() {
           />
           <InputGroup.Append>
             <Button
-              variant="outline-secondary"
               className="meeting-link join-button"
               variant="dark"
-              onClick={() => setModalShow(true)}
+              onClick={joinRoom}
             >
               Join Room
             </Button>
           </InputGroup.Append>
         </InputGroup>
       </div>
-      <Modal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        className="popup"
-        dialogClassName="modal-90w"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton></Modal.Header>
-        <ModalBody>
-          <h2 className="pad-60 header">stream.me</h2>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              joinRoom();
-            }}
-          >
-            <div className="input-feild align-self-center input-user">
-              <div className="row">
-                <p className="label username">UserName</p>
-                <input
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                  type="text"
-                  className="field"
-                  placeholder="Enter your name here"
-                ></input>
-              </div>
-            </div>
-            <Button
-              variant="light"
-              className="submit-button"
-              type="submit"
-              value="Submit"
-            >
-              Connect
-            </Button>
-          </form>
-        </ModalBody>
-      </Modal>
     </div>
   );
 }

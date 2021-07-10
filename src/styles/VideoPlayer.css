@@ -73,6 +73,7 @@ body {
 
 .audio-button {
   border-radius: 2rem;
+  margin-left: 1rem;
   background-color: black;
 }
 .video-button {
