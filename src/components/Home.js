@@ -37,7 +37,7 @@ function Home() {
             High quality video and audio
           </ListGroup.Item>
           <ListGroup.Item variant="primary">
-            Chat Access before or after the meeting
+            Access Chat before or after the meeting
           </ListGroup.Item>
         </ListGroup>
       </div>
