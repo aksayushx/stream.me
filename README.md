@@ -26,7 +26,7 @@ It has been developed in 3 sprints, each lasting a week.
 * Secure and fast, does not involve any intermediate server, direct peer to peer connections.
 
 
-Keeping in mind the agile methodology, the application has been developed such that switching to an Communication SDK 
+Following the agile methodology, the application has been structured such that switching to an Communication SDK 
 in future can be done easily without introducing a lot ofmajor changes in the codebase.
 
 The application has been tested thoroughly with upto 5 people and performed with the same smoothness irrespective of the number of users.
