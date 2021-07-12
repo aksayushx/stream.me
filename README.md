@@ -2,8 +2,8 @@
 This is my submission repo for the Microsoft Engage Mentorship Program 2021.
 The demo video can be found [here](https://youtu.be/ckGRAKVA1fQ)
 
-This application has been developed following the agile methodology using react for the frontend part and nodejs for the backend. 
-It has been developed in 3 sprints, each lasting a week.
+This application has been developed following the Scrum methodology of Agile software development using React for the frontend and nodejs for the backend. 
+It has been developed in 3 sprints, each lasting a little over a week.
 
 ### Sprint 1
 * Design the UI and the most suitable platforms or frameworks for the development.
@@ -26,10 +26,15 @@ It has been developed in 3 sprints, each lasting a week.
 * Invite button to diectly copy joining info to the clipboard.
 * Secure and fast, does not involve any intermediate server, direct peer to peer connections.
 
+## Dependencies
+* [socket.io](https://www.npmjs.com/package/socket.io)
+* [express](https://www.npmjs.com/package/express)
+* [cors](https://www.npmjs.com/package/cors)
+* [xss](https://www.npmjs.com/package/xss)
+* [react-bootstrap](https://www.npmjs.com/package/react-bootstrap)
+* [material-ui](https://www.npmjs.com/package/@material-ui/core)
 
 Following the agile methodology, the application has been structured such that switching to an Communication SDK 
 in future can be done easily without introducing a lot ofmajor changes in the codebase.
 
 The application has been tested thoroughly with upto 5 people and performed with the same smoothness irrespective of the number of users.
-
-Following is a short demo of its functionality and its currently deployed at the url provided so that you can test it out yourselves.
