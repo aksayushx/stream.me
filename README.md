@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# stream.me
+This is my submission repo for the Microsoft Engage Mentorship Program 2021.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This application has been developed following the agile methodology using react for the frontend part and nodejs for the backend. 
+It has been developed in 3 sprints, each lasting a week.
 
-## Available Scripts
+### Sprint 1
+* Design the UI and the most suitable platforms or frameworks for the development.
+* Decide the entire workflow of the app, components and overall structure.
 
-In the project directory, you can run:
+### Sprint 2
+* Develop the server for signalling using WebRTC.
+* Develop the frontend components and combine them to get the video chatting functionality.
 
-### `npm start`
+### Sprint 3
+* Add the chat feature, and make it accessible independent of the meeting.
+* Make minor UI improvments and thoroughly test all the features with different numbers of users in a room.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+It has a very simple to use interface and allows upto 5 people to join the same room and chat with each other seamlessly. 
+There can be multiple rooms and different team wise going on at the same time with each room having upto 5 people. 
+It is incredibly fast and secure as it does not involve any intermediate server or SDK and uses direct peer to peer connections 
+between the browsers.
 
-### `npm test`
+The current features allow users to turn their microphone and camera on/off. Chat with each other in the meeting. The chat remains forever and can be used 
+even after the meeting gets over, using the Room Url which was used to connect to the meeting.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+A user can also put a message as a notice before the start of the meeting so that anyone joining the meet in future can see that.
 
-### `npm run build`
+Keeping in mind the agile methodology, the application has been developed such that switching to an Communication SDK 
+in future can be done easily without introducing a lot ofmajor changes in the codebase.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The application has been tested thoroughly with upto 5 people and performed with the same smoothness irrespective of the number of users.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Following is a short demo of its functionality and its currently deployed at the url provided so that you can test it out yourselves.
