@@ -1,5 +1,6 @@
 # stream.me
 This is my submission repo for the Microsoft Engage Mentorship Program 2021.
+The demo video can be found [here](https://youtu.be/ckGRAKVA1fQ)
 
 This application has been developed following the agile methodology using react for the frontend part and nodejs for the backend. 
 It has been developed in 3 sprints, each lasting a week.
