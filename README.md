@@ -16,16 +16,15 @@ It has been developed in 3 sprints, each lasting a week.
 * Add the chat feature, and make it accessible independent of the meeting.
 * Make minor UI improvments and thoroughly test all the features with different numbers of users in a room.
 
+## List of Features
+* Turn Microphone On/Off.
+* Turn Camera On/Off.
+* Conduct multiple meetings at the same time with each meeting having upto 5 people.
+* in meeting chat.
+* Access meeting chat before or after the meeting.
+* Invite button to diectly copy joining info to the clipboard.
+* Secure and fast, does not involve any intermediate server, direct peer to peer connections.
 
-It has a very simple to use interface and allows upto 5 people to join the same room and chat with each other seamlessly. 
-There can be multiple rooms and different team wise going on at the same time with each room having upto 5 people. 
-It is incredibly fast and secure as it does not involve any intermediate server or SDK and uses direct peer to peer connections 
-between the browsers.
-
-The current features allow users to turn their microphone and camera on/off. Chat with each other in the meeting. The chat remains forever and can be used 
-even after the meeting gets over, using the Room Url which was used to connect to the meeting.
-
-A user can also put a message as a notice before the start of the meeting so that anyone joining the meet in future can see that.
 
 Keeping in mind the agile methodology, the application has been developed such that switching to an Communication SDK 
 in future can be done easily without introducing a lot ofmajor changes in the codebase.
