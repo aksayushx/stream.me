@@ -41,6 +41,19 @@ var socketId = null;
 var elms = 0;
 
 function VideoPlayer(props) {
+  /**
+   * @param - localVideoRef - Ref to the local user stream.
+   * @param - showUsernameModal - Boolean state to store whether or not to display the username modal.
+   * @param - username - Stores the username of the current user which is displayed while chatting.
+   * @param - videoAvailable - Boolean state to store whether video permissions are allowed by the user.
+   * @param - audioAvailable - Boolean state to store whether audio permissions are allowed by the user.
+   * @param - videoOn - Boolean state to store whether current user's camera is turned on/off.
+   * @param - audioOn - Boolean state to store whether current user is muted/unmuted.
+   * @param - showModal - Boolean variable to store the present state of the chat window.
+   * @param - allMessages - Stores a list of all messages sent till now, along with the sender's usernames.
+   * @param - message - Stores the new message being types by the current user.
+   * @param - newMessages - Integer variable to store the number of unread messages, displayed on the message badge.
+   */
   const localVideoRef = createRef();
   const [showUsernameModal, setShowUsernameModal] = useState(true);
   const [username, setUsername] = useState("");

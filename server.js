@@ -1,3 +1,8 @@
+/**
+ * Signalling Server for handshaking between peers.
+ * Contains the neccessary socket events, for join-call, chat-message, leave-call
+ */
+
 const express = require("express");
 const http = require("http");
 var cors = require("cors");

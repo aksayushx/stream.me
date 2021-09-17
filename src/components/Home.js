@@ -4,9 +4,17 @@ import { v4 as uuidv4 } from "uuid";
 import "../styles/Home.css";
 
 function Home() {
+  /**
+   * @param - createRoom - Boolean variable to store whether to create a new room to direct to an existing one.
+   * @param - roomUrl - Stores the destination meeting room URL.
+   */
   const [createRoom, setCreateRoom] = useState(true);
   const [roomUrl, setRoomUrl] = useState("");
 
+  /**
+   * Redirects to a new room if no room URL is provided,
+   * otherwise redirects to the provided meeting room.
+   */
   const joinRoom = () => {
     if (createRoom === true) {
       var url = uuidv4();
